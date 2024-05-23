@@ -1,5 +1,4 @@
 #!/bin/bash
-cd
 rm -rf setup.sh
 clear
 red='\e[1;31m'
@@ -144,7 +143,7 @@ echo -e "$BGreen      Install SLOWDNS           $NC"
 echo -e "\e[33m-----------------------------------\033[0m"
 sleep 0.5
 clear
-wget https://raw.githubusercontent.com/KochengVpn/v1/main/ssh/slowdns.sh && chmod +x slowdns.sh && ./slowdns.sh   
+wget https://raw.githubusercontent.com/KochengVpn/v1/main/ssh/wslow.sh && chmod +x wslow.sh && ./wslow.sh   
 #install ssh ovpn
 echo -e "\e[33m-----------------------------------\033[0m"
 echo -e "$BGreen      Install SSH Websocket           $NC"
