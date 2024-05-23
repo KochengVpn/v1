@@ -1,0 +1,62 @@
+#!/bin/bash
+apt install jq curl -y
+clear
+echo
+echo
+echo -e "\e[33;1m        POINTING IP VPS     \e[0m"
+echo -e ""
+# Membaca input IP VPS dari pengguna
+read -p "  Masukkan IP VPS   : " IP
+echo -e ""
+
+# Membaca input nama depan dari pengguna
+read -p "  Masukan subdomain : " nama_depan
+
+# domain Yg mau di Pointing
+DOMAIN=givpn.online
+
+
+# Menggabungkan nama depan dengan domain
+dns=${nama_depan}.${DOMAIN}
+
+CF_ID=givpn11@gmail.com
+CF_KEY=f881f9b79d839f0f2f7601f7a7bd18ab8ddda
+
+set -euo pipefail
+
+echo "Updating DNS for ${dns}..."
+
+ZONE=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones?name=${DOMAIN}&status=active" \
+     -H "X-Auth-Email: ${CF_ID}" \
+     -H "X-Auth-Key: ${CF_KEY}" \
+     -H "Content-Type: application/json" | jq -r .result[0].id)
+
+RECORD=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records?name=${dns}" \
+     -H "X-Auth-Email: ${CF_ID}" \
+     -H "X-Auth-Key: ${CF_KEY}" \
+     -H "Content-Type: application/json" | jq -r .result[0].id)
+
+if [[ "${#RECORD}" -le 10 ]]; then
+     RECORD=$(curl -sLX POST "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records" \
+     -H "X-Auth-Email: ${CF_ID}" \
+     -H "X-Auth-Key: ${CF_KEY}" \
+     -H "Content-Type: application/json" \
+     --data '{"type":"A","name":"'${dns}'","content":"'${IP}'","ttl":120,"proxied":false}' | jq -r .result.id)
+fi
+
+RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records/${RECORD}" \
+     -H "X-Auth-Email: ${CF_ID}" \
+     -H "X-Auth-Key: ${CF_KEY}" \
+     -H "Content-Type: application/json" \
+     --data '{"type":"A","name":"'${dns}'","content":"'${IP}'","ttl":120,"proxied":false}')
+
+# Menampilkan pesan sukses dalam bentuk kolom
+echo -e "\e[33;1m---------------------- \e[0m"
+echo -e "\e[32;1m      Sukses!          \e[0m"
+echo -e "\e[33;1m---------------------- \e[0m"
+echo -e "\e[36;1m Domain : ${dns}"
+echo -e "\e[36;1m IP VPS : ${IP}"
+echo -e "\e[33;1m---------------------- \e[0m"
+echo ""
+read -p "ENTER Back To Menu"
+menu
