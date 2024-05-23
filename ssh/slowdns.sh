@@ -17,12 +17,12 @@ rm nsdomain
 #input nameserver manual to cloudflare
 
 clear
-figlet "slowdns" | lolcat
+#figlet "slowdns" | lolcat
 echo -e ""
-read -rp " MASUKAN Nameserver: " -e sub
-SUB_DOMAIN=${sub}
-NS_DOMAIN=${SUB_DOMAIN}
-echo $NS_DOMAIN > /root/nsdomain
+#read -rp " MASUKAN Nameserver: " -e sub
+#SUB_DOMAIN=${sub}
+#NS_DOMAIN=${SUB_DOMAIN}
+#echo $NS_DOMAIN > /root/nsdomain
 
 nameserver=$(cat /root/nsdomain)
 apt update -y
