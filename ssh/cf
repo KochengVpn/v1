@@ -51,7 +51,5 @@ echo "$SUB_DOMAIN" > /root/scdomain
 echo "$SUB_DOMAIN" > /root/xray/scdomain
 echo -e "Done Record Domain= ${SUB_DOMAIN} For VPS"
 rm -rf cf
-sleep 3
 clear
-menu
 
