@@ -1,4 +1,5 @@
 #!/bin/bash
+clear
 MYIP=$(wget -qO- ipv4.icanhazip.com);
 echo "Checking VPS"
 clear
@@ -73,7 +74,7 @@ echo -e "Expired On  : $exp" | tee -a /etc/log-create-ssh.log
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-ssh.log
 echo -e "IP          : $IP" | tee -a /etc/log-create-ssh.log
 echo -e "Host        : $domen" | tee -a /etc/log-create-ssh.log
-echo -e "Ns Host     : $sldomain cat /root/nsdomain)"
+echo -e "Ns Host     : $sldomain $(cat /root/nsdomain)"
 echo -e "Pub key     : $slkey"
 echo -e "Udp Custom  : $domen:1-65535@Login:Pass"
 echo -e "OpenSSH     : $opensh" | tee -a /etc/log-create-ssh.log
@@ -97,4 +98,4 @@ echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━�
 fi
 echo "" | tee -a /etc/log-create-ssh.log
 read -n 1 -s -r -p "Press any key to back on menu"
-m-sshovpn
+menu
